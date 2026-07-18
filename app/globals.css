@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  ============================================================
+  TRUSTED CRAFT — design tokens (v0, neutral first pass)
+  Warm light base · premium-dark money surfaces · spring motion.
+  Everything is a token. To redirect the whole look, edit here.
+  Colors are HSL channels so Tailwind opacity modifiers work.
+  ============================================================
+*/
+
+:root {
+  /* --- brutal dark base --- */
+  --background: 0 0% 5%;
+  --foreground: 0 0% 93%;
+
+  --card: 0 0% 9%;
+  --card-foreground: 0 0% 93%;
+
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 56%;
+
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 90%;
+
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+
+  /* grown-up chartreuse accent — money-coded, dialed back from neon (easy to swap) */
+  --primary: 72 82% 54%;
+  --primary-foreground: 70 60% 4%;
+
+  --accent: 72 82% 54%;
+  --accent-foreground: 70 60% 4%;
+
+  --ring: 72 84% 50%;
+
+  /* money surface — near-black, chartreuse highlight */
+  --money: 0 0% 8%;
+  --money-foreground: 0 0% 96%;
+  --money-muted-foreground: 0 0% 56%;
+  --money-accent: 72 82% 54%;
+  --money-border: 0 0% 24%;
+
+  /* --- shape: light softness --- */
+  --radius: 0.5rem;
+
+  /* --- type (--font-sans is provided by next/font: Overused Grotesk) --- */
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* --- motion (CSS-side; JS springs live in lib/motion.ts) --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* tabular numerals for money — numbers must not jitter */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* honor reduced-motion everywhere (accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* light global roundness — bordered surfaces get the radius even without a utility class */
+:where([class~="border"]) {
+  border-radius: var(--radius);
+}
+
+/*
+  Corner smoothing (squircle) — progressive enhancement via CSS `corner-shape`
+  (recent Chromium; ignored elsewhere → falls back to plain rounded corners).
+  ~50% smoothing knob: tune the superellipse number (higher = squarer/less round).
+*/
+*,
+*::before,
+*::after {
+  corner-shape: superellipse(1.2);
+}

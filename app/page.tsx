@@ -9,6 +9,7 @@ import { fxCurrent, fxChangePct } from "@/lib/fx";
 import { useLiveRate } from "@/lib/use-live-rate";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui/logo";
+import { Ambient } from "@/components/ui/ambient";
 
 const FEATURES = [
   { k: "Collect · Convert · Hold · Send", v: "The full escrow instrument, on Xe's rails." },
@@ -50,12 +51,14 @@ export default function Home() {
     : { href: "/onboarding", label: "Get started" };
 
   return (
-    <motion.main
-      variants={staggerContainer}
-      initial="hidden"
-      animate="show"
-      className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-10 px-6 py-16"
-    >
+    <>
+      <Ambient />
+      <motion.main
+        variants={staggerContainer}
+        initial="hidden"
+        animate="show"
+        className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-10 px-6 py-16"
+      >
       <div className="space-y-5">
         <motion.div variants={staggerItem} className="flex flex-wrap items-center gap-3">
           <span className="flex items-center gap-2 text-sm font-semibold tracking-tight">
@@ -114,6 +117,7 @@ export default function Home() {
       <motion.p variants={staggerItem} className="text-xs text-muted-foreground/70">
         Demo — you&apos;re viewing a sample multi-currency account that both pays and gets paid.
       </motion.p>
-    </motion.main>
+      </motion.main>
+    </>
   );
 }

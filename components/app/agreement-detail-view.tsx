@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, Check, CheckCircle } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, Check, CheckCircle } from "@phosphor-icons/react";
 import { useDemo } from "@/lib/store";
-import { STATE_LABEL, isLocked } from "@/lib/types";
+import { STATE_LABEL, isLocked, type Agreement } from "@/lib/types";
 import { stateVariant } from "@/lib/derive";
 import { MARKET_RATE } from "@/lib/seed";
 import { cn, fmt, fxDelta, receiverAmount } from "@/lib/utils";
@@ -48,6 +48,7 @@ export function AgreementDetailView({ id, showBack = false }: { id: string; show
   const inr = receiverAmount(a.amount, a.lockedRate);
   const locked = isLocked(a.state);
   const deliverable = a.kind === "goods" ? "shipment" : "work";
+  const nextTurn = nextActor(a.state, youArePayer);
 
   return (
     <div>
@@ -113,7 +114,12 @@ export function AgreementDetailView({ id, showBack = false }: { id: string; show
       {/* Action */}
       <div className="mt-6">
         {a.state !== "released" && (
-          <ActingAsToggle actingAs={actingAs} setActingAs={setActingAs} cpFirst={cpFirst} />
+          <DemoStepper
+            actingAs={actingAs}
+            setActingAs={setActingAs}
+            cpFirst={cpFirst}
+            nextTurn={nextTurn}
+          />
         )}
 
         {/* PAYER actions */}
@@ -240,39 +246,85 @@ export function AgreementDetailView({ id, showBack = false }: { id: string; show
   );
 }
 
-function ActingAsToggle({
+/** Which side must act next, expressed in the toggle's own terms ("you" | the counterparty). */
+function nextActor(
+  state: Agreement["state"],
+  youArePayer: boolean,
+): "you" | "counterparty" | null {
+  const payerActs = state === "changes_requested" || state === "accepted" || state === "submitted";
+  const receiverActs = state === "proposed" || state === "funded";
+  const role = payerActs ? "payer" : receiverActs ? "receiver" : null;
+  if (!role) return null;
+  const youRole = youArePayer ? "payer" : "receiver";
+  return role === youRole ? "you" : "counterparty";
+}
+
+/*
+  The two-sided demo control. In real life each party acts from their own
+  device; here a single explorer flips between the two to walk the deal
+  forward. The "whose move" nudge points to the side that can act next, so
+  landing on the waiting side is a one-tap fix rather than a dead end.
+*/
+function DemoStepper({
   actingAs,
   setActingAs,
   cpFirst,
+  nextTurn,
 }: {
   actingAs: "you" | "counterparty";
   setActingAs: (v: "you" | "counterparty") => void;
   cpFirst: string;
+  nextTurn: "you" | "counterparty" | null;
 }) {
   const opts: { key: "you" | "counterparty"; label: string }[] = [
     { key: "you", label: "You" },
     { key: "counterparty", label: cpFirst },
   ];
+  const waiting = nextTurn !== null && actingAs !== nextTurn;
+  const nudge =
+    nextTurn === "you"
+      ? "Your move — switch back to you"
+      : `It’s ${cpFirst}’s move — act as ${cpFirst}`;
+
   return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="text-xs text-muted-foreground">Acting as</span>
-      <div className="flex border border-border">
-        {opts.map((o) => (
-          <button
-            key={o.key}
-            onClick={() => setActingAs(o.key)}
-            className={cn(
-              "px-2.5 py-1 text-xs outline-none focus-visible:ring-2 focus-visible:ring-ring",
-              actingAs === o.key
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {o.label}
-          </button>
-        ))}
+    <div className="mb-4 border border-border bg-muted/30 p-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Demo · step through both sides
+          </p>
+          <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground/80">
+            Each side normally acts from their own device — switch here to advance the deal.
+          </p>
+        </div>
+        <div role="group" aria-label="Acting as" className="flex shrink-0 border border-border">
+          {opts.map((o) => (
+            <button
+              key={o.key}
+              onClick={() => setActingAs(o.key)}
+              aria-pressed={actingAs === o.key}
+              className={cn(
+                "px-2.5 py-1 text-xs outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring",
+                actingAs === o.key
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
       </div>
-      <span className="text-[11px] text-muted-foreground/70">demo</span>
+
+      {waiting && (
+        <button
+          onClick={() => setActingAs(nextTurn)}
+          className="mt-3 flex w-full items-center justify-between gap-2 border border-primary/40 bg-primary/10 px-3 py-2 text-left text-xs font-medium text-primary outline-none transition-colors hover:bg-primary/15 focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <span>{nudge}</span>
+          <ArrowRight className="h-3.5 w-3.5 shrink-0" weight="bold" />
+        </button>
+      )}
     </div>
   );
 }

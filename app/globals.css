@@ -6,15 +6,15 @@
 
 /*
   ============================================================
-  TRUSTED CRAFT — design tokens (v0, neutral first pass)
-  Warm light base · premium-dark money surfaces · spring motion.
+  CROW — design tokens
+  Near-black base · chartreuse money accent · money surfaces · spring motion.
   Everything is a token. To redirect the whole look, edit here.
   Colors are HSL channels so Tailwind opacity modifiers work.
   ============================================================
 */
 
 :root {
-  /* --- brutal dark base --- */
+  /* --- dark base --- */
   --background: 0 0% 5%;
   --foreground: 0 0% 93%;
 

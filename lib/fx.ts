@@ -23,13 +23,6 @@ const fxPrev = FX_SERIES[FX_SERIES.length - 2];
 export const fxChange = Math.round((fxCurrent - fxPrev) * 100) / 100;
 export const fxChangePct = Math.round((fxChange / fxPrev) * 1000) / 10;
 
-/** dated series for the recharts line chart (fixed anchor → deterministic) */
-const CHART_START = new Date("2026-06-16T00:00:00Z").getTime();
-export const FX_CHART = FX_SERIES.map((rate, i) => ({
-  date: new Date(CHART_START + i * 86400000).toISOString().slice(0, 10),
-  rate: Math.round(rate * 100) / 100,
-}));
-
 /** cross-border corridors for the ticker + forex rail (USD→INR is your corridor) */
 export const CORRIDORS = [
   { pair: "USD → INR", rate: "₹82.00", d: 0.2 },
@@ -49,16 +42,4 @@ export function totalProtected(ags: Agreement[]): number {
         sum + (receiverAmount(a.amount, a.lockedRate) - receiverAmount(a.amount, MARKET_RATE)),
       0,
     );
-}
-
-/** deterministic tiny per-gig rate series, ending at the gig's locked rate */
-export function gigSeries(lockedRate: number, seed: number): number[] {
-  const n = 12;
-  const arr: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const t = i / (n - 1);
-    arr.push(lockedRate - 1.0 * (1 - t) + Math.sin((i + seed) * 0.9) * 0.28);
-  }
-  arr[n - 1] = lockedRate;
-  return arr;
 }

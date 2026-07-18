@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, Check, CheckCircle, Lock } from "@phosphor-icons/react";
+import { ArrowLeft, Check, CheckCircle } from "@phosphor-icons/react";
 import { useDemo } from "@/lib/store";
 import { STATE_LABEL, isLocked } from "@/lib/types";
 import { stateVariant } from "@/lib/derive";

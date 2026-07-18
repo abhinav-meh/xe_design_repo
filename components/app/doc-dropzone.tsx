@@ -88,7 +88,7 @@ export function DocDropzone({
       </button>
 
       {error && (
-        <p className="mt-2 text-xs text-accent" role="alert">
+        <p className="mt-2 text-xs text-red-500" role="alert">
           {error}
         </p>
       )}

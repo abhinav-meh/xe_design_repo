@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, Lock } from "@phosphor-icons/react";
 import { useDemo } from "@/lib/store";
@@ -20,6 +20,7 @@ export function FundDialog({ a }: { a: Agreement }) {
   const [open, setOpen] = useState(false);
   const [locked, setLocked] = useState(false);
   const reduce = useReducedMotion();
+  const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const target = receiverAmount(a.amount, a.lockedRate);
   const cpFirst = a.counterparty.name.split(" ")[0];
@@ -28,9 +29,12 @@ export function FundDialog({ a }: { a: Agreement }) {
     if (!open) setLocked(false);
   }, [open]);
 
+  // don't leave a pending fund() scheduled if the dialog unmounts mid-lock
+  useEffect(() => () => clearTimeout(timer.current), []);
+
   function confirm() {
     setLocked(true);
-    setTimeout(
+    timer.current = setTimeout(
       () => {
         fund(a.id);
         setOpen(false);

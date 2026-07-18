@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { STATE_LABEL, sideForView, type Agreement, type View } from "@/lib/types";
@@ -13,7 +13,10 @@ import { staggerContainer, staggerItem } from "@/lib/motion";
 /* Active deals in the current view — 3 columns that scale on any width.
    Rows stagger in on mount and flash when their state changes under you. */
 export function Positions({ ags, view }: { ags: Agreement[]; view: View }) {
-  const rows = ags.filter((a) => a.side === sideForView(view) && a.state !== "released");
+  const rows = useMemo(
+    () => ags.filter((a) => a.side === sideForView(view) && a.state !== "released"),
+    [ags, view],
+  );
   const paying = view === "payments";
 
   // flash any row whose state just changed (e.g. funded → submitted across roles)
@@ -35,7 +38,7 @@ export function Positions({ ags, view }: { ags: Agreement[]; view: View }) {
       });
     }, 1300);
     return () => clearTimeout(t);
-  });
+  }, [rows]);
 
   return (
     <div className="border border-border bg-card">

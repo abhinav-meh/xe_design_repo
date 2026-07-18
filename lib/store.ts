@@ -17,7 +17,6 @@ interface DemoState {
   updateAgreement: (id: string, patch: Partial<Agreement>) => void;
   accept: (id: string) => void;
   requestChanges: (id: string, note: string) => void;
-  reviseResend: (id: string) => void;
   fund: (id: string) => void;
   submit: (id: string) => void;
   release: (id: string) => void;
@@ -54,10 +53,6 @@ export const useDemo = create<DemoState>()(
             state: "changes_requested",
             changeNote: note,
           })),
-        })),
-      reviseResend: (id) =>
-        set((s) => ({
-          agreements: mapOne(s.agreements, id, (a) => ({ ...a, state: "proposed", changeNote: undefined })),
         })),
       fund: (id) =>
         set((s) => ({ agreements: mapOne(s.agreements, id, (a) => ({ ...a, state: "funded" })) })),

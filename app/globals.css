@@ -14,6 +14,10 @@
 */
 
 :root {
+  /* tell the browser to render canvas, scrollbars and form controls dark so no
+     black shows through outside the body */
+  color-scheme: dark;
+
   /* --- dark base --- */
   --background: 0 0% 5%;
   --foreground: 0 0% 93%;
@@ -65,11 +69,14 @@
 }
 
 html {
+  min-height: 100%;
+  background-color: hsl(var(--background));
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 body {
+  min-height: 100vh;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
 }

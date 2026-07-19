@@ -57,9 +57,9 @@ export default function HomePage() {
       {/* 1 · money at a glance */}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {tiles.map((t) => (
-          <div key={t.label} className="border border-border bg-card p-4">
+          <div key={t.label} className="min-w-0 border border-border bg-card p-4">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">{t.label}</p>
-            <p className={cn("mt-1 font-mono text-xl font-semibold", t.accent && "text-primary")}>
+            <p className={cn("mt-1 truncate font-mono text-xl font-semibold", t.accent && "text-primary")}>
               {t.value}
             </p>
           </div>

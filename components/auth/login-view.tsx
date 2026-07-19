@@ -28,12 +28,12 @@ export function LoginView() {
   return (
     <div className="flex min-h-screen bg-background">
       {/* left decorative panel */}
-      <div className="relative hidden w-1/2 border-r border-border md:block">
+      <div className="relative hidden w-1/2 border-r border-border lg:block">
         <RadialField />
       </div>
 
       {/* right form */}
-      <div className="flex w-full items-center justify-center px-6 md:w-1/2">
+      <div className="flex w-full items-center justify-center px-6 lg:w-1/2">
         <motion.form
           onSubmit={login}
           variants={staggerContainer}
@@ -77,7 +77,7 @@ export function LoginView() {
                 type="button"
                 onClick={() => setShow((s) => !s)}
                 aria-label={show ? "Hide password" : "Show password"}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+                className="absolute right-0.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {show ? <EyeSlash className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>

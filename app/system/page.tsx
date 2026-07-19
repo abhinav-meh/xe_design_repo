@@ -165,7 +165,7 @@ export default function SystemPage() {
         hint="Overused Grotesk (self-hosted, variable) for everything · Geist Mono for money numbers."
       >
         <div className="space-y-4">
-          <p className="text-display-lg font-semibold tracking-tight">Aa 128</p>
+          <p className="text-5xl font-semibold tracking-tight sm:text-display-lg">Aa 128</p>
           <p className="text-display-sm font-semibold tracking-tight">
             Display — the numbers that carry weight
           </p>

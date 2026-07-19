@@ -109,7 +109,7 @@ function TickingAmount({ target, locked }: { target: number; locked: boolean }) 
       animate={locked ? { scale: [1.12, 1] } : {}}
       transition={spring.snappy}
       className={cn(
-        "font-mono tabular text-4xl font-semibold tracking-tight",
+        "font-mono tabular text-3xl font-semibold tracking-tight sm:text-4xl",
         locked ? "text-primary" : "text-foreground",
       )}
     >

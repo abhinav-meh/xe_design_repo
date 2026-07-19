@@ -20,13 +20,13 @@ function RowInner({ a, view }: { a: Agreement; view: View }) {
   return (
     <div className="w-full">
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-medium">{a.title}</p>
-          <p className="mt-0.5 text-sm text-muted-foreground">
+        <div className="min-w-0">
+          <p className="truncate font-medium">{a.title}</p>
+          <p className="mt-0.5 truncate text-sm text-muted-foreground">
             {paying ? "To" : "From"} {a.counterparty.name}
           </p>
         </div>
-        <Pill>
+        <Pill className="shrink-0">
           <PillIndicator variant={stateVariant(a.state)} pulse={a.state === "funded"} />
           {STATE_LABEL[a.state]}
         </Pill>
@@ -139,7 +139,7 @@ export default function AgreementsPage() {
 
       <div className="mt-5 hidden gap-6 md:grid md:grid-cols-[minmax(0,340px)_1fr]">
         <List key={filter} items={items} view={view} variant="web" selected={effective} onSelect={setSelected} />
-        <div className="border border-border p-6">
+        <div className="min-w-0 border border-border p-6">
           <AnimatePresence mode="wait" initial={false}>
             {effective ? (
               <motion.div

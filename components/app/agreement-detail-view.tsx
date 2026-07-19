@@ -56,14 +56,14 @@ export function AgreementDetailView({ id, showBack = false }: { id: string; show
 
       <div className={showBack ? "mt-5" : ""}>
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <h1 className="text-2xl font-semibold tracking-tight">{a.title}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {youArePayer ? "To" : "From"} {cp} · {a.counterparty.country} ·{" "}
               {a.kind === "goods" ? "Goods" : "Service"}
             </p>
           </div>
-          <Pill>
+          <Pill className="shrink-0">
             <PillIndicator variant={stateVariant(a.state)} pulse={a.state === "funded"} />
             {STATE_LABEL[a.state]}
           </Pill>

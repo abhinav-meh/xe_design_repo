@@ -36,7 +36,7 @@ export function MoneyDisplay({
   return (
     <div
       className={cn(
-        "relative p-6",
+        "relative min-w-0 p-6",
         premium
           ? "border border-money-accent bg-money text-money-foreground shadow-[6px_6px_0_0_hsl(var(--money-accent))]"
           : "border border-border bg-card text-card-foreground",
@@ -59,7 +59,7 @@ export function MoneyDisplay({
           value={value}
           format={(n) => fmt(Math.round(n), currency)}
           className={cn(
-            "font-mono tabular text-display-sm font-semibold tracking-tight",
+            "font-mono tabular text-3xl font-semibold tracking-tight sm:text-display-sm",
             premium && "text-money-accent",
           )}
         />

@@ -9,6 +9,7 @@ import {
   FileText,
   Wallet,
   ClockCounterClockwise,
+  ArrowClockwise,
   Plus,
   type IconProps,
 } from "@phosphor-icons/react";
@@ -142,7 +143,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
       {/* mobile top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/80 px-5 backdrop-blur md:hidden">
         <Brand />
-        <ViewSwitch />
+        <div className="flex items-center gap-2">
+          <ViewSwitch />
+          <button
+            onClick={reset}
+            aria-label="Reset demo"
+            title="Reset demo"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <ArrowClockwise className="h-4 w-4" weight="bold" />
+          </button>
+        </div>
       </header>
 
       {/* desktop top nav (Legend-style) */}

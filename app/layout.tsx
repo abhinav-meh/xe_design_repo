@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={grotesk.variable}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${grotesk.variable} bg-background`}>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

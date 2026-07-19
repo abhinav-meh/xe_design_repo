@@ -21,6 +21,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 import { RateTicker } from "@/components/app/rate-ticker";
 import { ForexRail } from "@/components/app/forex-rail";
+import { Ambient } from "@/components/ui/ambient";
 
 const NAV: { href: string; label: string; icon: React.ComponentType<IconProps> }[] = [
   { href: "/app", label: "Home", icon: House },
@@ -138,8 +139,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   if (hydrated && !onboarded) return null;
 
+  const showGlow = path === "/app/new" || path === "/app/request";
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
+      {showGlow && <Ambient />}
       {/* mobile top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/80 px-5 backdrop-blur md:hidden">
         <Brand />

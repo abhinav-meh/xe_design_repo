@@ -26,7 +26,7 @@ export function LoginView() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen">
       {/* left decorative panel */}
       <div className="relative hidden w-1/2 border-r border-border lg:block">
         <RadialField />

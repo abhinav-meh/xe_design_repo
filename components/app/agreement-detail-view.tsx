@@ -339,7 +339,7 @@ function BackLink() {
       href="/app/agreements"
       className="inline-flex items-center gap-1.5 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <ArrowLeft className="h-4 w-4" /> Agreements
+      <ArrowLeft className="h-4 w-4" /> Transactions
     </Link>
   );
 }

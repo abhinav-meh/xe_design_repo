@@ -121,7 +121,7 @@ export default function AgreementsPage() {
   return (
     <div>
       <h1 className="mb-4 text-2xl font-semibold tracking-tight">
-        {view === "payments" ? "Payments" : "Receipts"}
+        Transactions
       </h1>
 
       <Tabs value={filter} onValueChange={(v) => setFilter(v as Filter)}>

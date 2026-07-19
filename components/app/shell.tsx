@@ -23,7 +23,7 @@ import { ForexRail } from "@/components/app/forex-rail";
 
 const NAV: { href: string; label: string; icon: React.ComponentType<IconProps> }[] = [
   { href: "/app", label: "Home", icon: House },
-  { href: "/app/agreements", label: "Agreements", icon: FileText },
+  { href: "/app/agreements", label: "Transactions", icon: FileText },
   { href: "/app/balances", label: "Balances", icon: Wallet },
   { href: "/app/activity", label: "Activity", icon: ClockCounterClockwise },
 ];
